@@ -5,18 +5,40 @@ import type { Character } from './types.ts';
 class CharacterStore {
   characters: Character[] = [];
   countPage = 0;
+  cardId: number | null = null;
 
-  constructor () {
+  constructor() {
     makeAutoObservable(this);
   }
 
-  setCharacters (characters: Character[]) {
-    const ids = new Set(this.characters.map(character => character.id));
-    const filteredCharacters = characters.filter(character => !ids.has(character.id));
-    this.characters.push(...filteredCharacters);
+  setCharacters(newCharacters: Character[]) {
+    this.characters = [...this.characters, ...newCharacters];
   }
 
-  increment () {
+  onEditCardId(id: number | null) {
+    this.cardId = id;
+  }
+
+  onEditCard({ name, gender, species }: Pick<Character, 'name' | 'gender' | 'species'>) {
+    this.characters = this.characters.map((character) => {
+      if (character.id === this.cardId) {
+        return {
+          ...character,
+          name,
+          gender,
+          species
+        };
+      }
+
+      return character;
+    });
+  }
+
+  onDeleteCard(id: Character['id']) {
+    this.characters = this.characters.filter((character) => character.id !== id);
+  }
+
+  increment() {
     return this.countPage++;
   }
 }

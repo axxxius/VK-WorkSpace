@@ -1,17 +1,15 @@
+import { Character } from '@/pages/character';
 import { MantineProvider } from '@mantine/core';
 
 import '@mantine/core/styles.css';
+import './styles/index.css';
 
-import { Character } from '../pages/character';
-
-const App = () => {
+export const App = () => {
   return (
-    <>
-      <MantineProvider>
+    <div className='app'>
+      <MantineProvider defaultColorScheme='dark'>
         <Character />
       </MantineProvider>
-    </>
+    </div>
   );
 };
-
-export default App;

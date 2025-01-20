@@ -1,30 +1,16 @@
 import { observer } from 'mobx-react-lite';
-import { useState } from 'react';
 
-import { Badge, Button, Card, Flex, Group, Image, Loader, Text } from '@mantine/core';
+import { useIntersection } from '@/shared/hooks';
+import { Box, Flex, Loader, Title } from '@mantine/core';
 
-import { useQuery } from '../../../shared/hooks/http/useQuery.ts';
-import { useIntersection } from '../../../shared/hooks/useIntersection.ts';
-import { charactersRequests } from '../api/characterRequests.ts';
+import { useGetCharactersQuery } from '../api/hooks/useGetCharactersQuery.ts';
 import { characterStore } from '../model/characterStore.ts';
 
+import { CardList } from './cardList/cardLIst.tsx';
 import styles from './character.module.css';
 
 export const Character = observer(() => {
-  useState();
-  const { refetch, isLoading } = useQuery(
-    () =>
-      charactersRequests.getCharacter({
-        params: {
-          page: characterStore.countPage
-        }
-      }),
-    {
-      onSuccess: (response) => {
-        characterStore.setCharacters(response.data.results);
-      }
-    }
-  );
+  const { refetch, isLoading } = useGetCharactersQuery();
 
   const cursorRef = useIntersection(() => {
     if (!isLoading) {
@@ -34,33 +20,19 @@ export const Character = observer(() => {
   });
 
   return (
-    <div className={styles.container}>
-      <div className={styles.cards}>
-        {characterStore.characters.map((el) => (
-          <Card key={el.id} w={280} shadow='sm' padding='lg' radius='md' withBorder>
-            <Card.Section>
-              <Image src={el.image} height={160} alt='Character Image' />
-            </Card.Section>
-
-            <Group justify='space-between' mt='md' mb='xs'>
-              <Text fw={500}>{el.name}</Text>
-              <Badge color='pink'>On Sale</Badge>
-            </Group>
-
-            <Text size='sm' c='dimmed'>
-              {el.species} - {el.status}
-            </Text>
-
-            <Button color='blue' fullWidth mt='md' radius='md'>
-              Book classic tour now
-            </Button>
-          </Card>
-        ))}
-      </div>
-      <div ref={cursorRef}></div>
-      <Flex align='center' justify='center'>
-        {isLoading && <Loader size={30} />}
+    <Box maw={1200} mx='auto'>
+      <Title mb={20} order={1}>
+        Characters
+      </Title>
+      <Flex>
+        <div className={styles.container}>
+          <CardList />
+          <div ref={cursorRef}></div>
+          <Flex align='center' justify='center'>
+            {isLoading && <Loader size={30} />}
+          </Flex>
+        </div>
       </Flex>
-    </div>
+    </Box>
   );
 });

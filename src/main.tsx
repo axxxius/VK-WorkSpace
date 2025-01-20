@@ -1,8 +1,8 @@
 import { createRoot } from 'react-dom/client';
 
-import './app/styles/index.css';
+import { App } from '@/app/app.tsx';
 
-import App from './app/app.tsx';
+import './app/styles/index.css';
 
 createRoot(document.getElementById('root')!).render(
   <div className='app'>
