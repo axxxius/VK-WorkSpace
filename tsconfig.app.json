@@ -12,7 +12,7 @@
     /* Bundler mode */
     "moduleResolution": "Bundler",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     },
     "allowImportingTsExtensions": true,
 
