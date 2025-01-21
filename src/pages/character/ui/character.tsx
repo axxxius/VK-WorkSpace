@@ -28,7 +28,7 @@ export const Character = observer(() => {
         <div className={styles.container}>
           <CardList />
           <div ref={cursorRef}></div>
-          <Flex align='center' justify='center'>
+          <Flex align='center' justify='center' h='65vh'>
             {isLoading && <Loader size={30} />}
           </Flex>
         </div>

@@ -13,14 +13,14 @@ export const CardList = observer(() => {
   return (
     <Box>
       <div className={styles.cards}>
-        {characters.map((character, index) => {
+        {characters.map((character) => {
           if (character.id === characterStore.cardId) {
-            return <EditInfoCardItem key={`${character.id}edit`} character={character} />;
+            return <EditInfoCardItem key={character.id} character={character} />;
           }
 
           return (
             <CardItem
-              key={`${character.id}_${index}`}
+              key={character.id}
               id={character.id}
               name={character.name}
               gender={character.gender}

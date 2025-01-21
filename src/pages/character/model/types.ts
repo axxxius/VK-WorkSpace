@@ -9,7 +9,7 @@ interface Location {
 }
 
 export interface Character {
-  id: number;
+  id: string;
   name: string;
   status: 'Alive' | 'Dead' | 'unknown';
   species: string;

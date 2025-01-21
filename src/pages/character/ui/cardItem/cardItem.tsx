@@ -6,7 +6,7 @@ import { ActionIcon, Badge, Card, Group, Image, Menu, Text } from '@mantine/core
 import { characterStore } from '../../model/characterStore.ts';
 
 interface CardItemProps {
-  id: number;
+  id: string;
   name: string;
   image: string;
   species: string;

@@ -1,21 +1,28 @@
 import { makeAutoObservable } from 'mobx';
+import { nanoid } from 'nanoid';
 
 import type { Character } from './types.ts';
 
 class CharacterStore {
   characters: Character[] = [];
   countPage = 0;
-  cardId: number | null = null;
+  cardId: string | null = null;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  setCharacters(newCharacters: Character[]) {
-    this.characters = [...this.characters, ...newCharacters];
+  setCharacters(newCharacters: Omit<Character, 'id'>[]) {
+    this.characters = [
+      ...this.characters,
+      ...newCharacters.map((character) => ({
+        ...character,
+        id: nanoid()
+      }))
+    ];
   }
 
-  onEditCardId(id: number | null) {
+  onEditCardId(id: string | null) {
     this.cardId = id;
   }
 
@@ -29,7 +36,6 @@ class CharacterStore {
           species
         };
       }
-
       return character;
     });
   }
