@@ -5,8 +5,8 @@ import type { Character } from './types.ts';
 
 class CharacterStore {
   characters: Character[] = [];
-  countPage = 0;
-  cardId: string | null = null;
+  countPage: number = 1;
+  cardId: Character['id'] | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -22,7 +22,7 @@ class CharacterStore {
     ];
   }
 
-  onEditCardId(id: string | null) {
+  onEditCardId(id: Character['id'] | null) {
     this.cardId = id;
   }
 

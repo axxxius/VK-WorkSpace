@@ -9,11 +9,11 @@ export const useForm = <T>({ initialValue }: UseFormProps<T>) => {
   const [field, setField] = useState(initialValue);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, type, checked, value } = e.target;
+    const { name, value } = e.target;
 
     setField((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: value
     }));
   };
 
